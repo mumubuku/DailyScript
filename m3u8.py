@@ -1,5 +1,6 @@
 import requests
 import random
+import os
 import csv
 from bs4 import BeautifulSoup
 from urllib.parse import urlparse
@@ -9,11 +10,23 @@ from selenium import webdriver
 def get_subdomains():
 
 
-     url = ''
-     with open('data.csv', 'w', newline='') as csvfile:
+   url = 'https://www.kan9132.com/vodplay/214019-1-1.html'
+
+     # 读取文件中的数字
+   if os.path.exists('num.txt'):
+     with open('num.txt', 'r') as f:
+      num = int(f.read())
+      print(num)
+   else:
+     with open('num.txt','w') as f:
+       f.write('100000')
+   
+   with open('data.csv', 'a', newline='') as csvfile:
        writer = csv.writer(csvfile)  
-       for number in range(100000, 999999):
+       for number in range(num, 999999):
         new_url = url.replace('214019', str(number))
+        with open('num.txt','w') as f:
+         f.write(str(number))
        
         driver = webdriver.Chrome()
 
